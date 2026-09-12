@@ -1,0 +1,10 @@
+# A flow that fails on purpose.
+#
+# Used to exercise debug_failure without waiting for a real bug to appear. The
+# assertion targets a label that exists in no application, so the failing step
+# will land in the branch that keeps the verdict at `unknown` — which is itself
+# worth seeing once, because it is the answer real failures most often get.
+appId: com.example.app
+---
+- launchApp
+- assertVisible: "A label that does not exist in any application"

@@ -1,0 +1,10 @@
+# A minimal flow for proving the toolchain works end to end.
+#
+# The appId below is a placeholder. Point it at something installed on your
+# device, or run this against an emulator that has it. It exists so that
+# run_parallel, debug_failure, and explore_and_record have something real to
+# operate on while you wire up your own suite.
+appId: com.example.app
+---
+- launchApp
+- assertVisible: "Sign in"

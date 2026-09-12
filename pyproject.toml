@@ -1,0 +1,62 @@
+[project]
+name = "maestro-plus"
+version = "0.1.0"
+description = "Multi-device pools, composite assertions, and automatic failure diagnosis for AI agents driving Maestro mobile UI tests."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+keywords = ["maestro", "mcp", "mobile", "testing", "android", "adb", "ai-agent"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Quality Assurance",
+    "Topic :: Software Development :: Testing",
+]
+
+dependencies = [
+    "mcp>=2,<3",
+    # Used by assert_visual and screenshot de-duplication. Declared rather than
+    # optional so `pip install maestro-plus` produces a working install; the
+    # affected tools report a clear message if it is ever missing.
+    "Pillow>=10",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8",
+    "pytest-anyio",
+    # Test-only: lets the generated flow be parsed as real YAML rather than
+    # asserted against a string, which is the difference between testing the
+    # output and testing a copy of it.
+    "pyyaml",
+    "ruff",
+]
+
+[project.scripts]
+maestro-plus = "maestro_plus.server:main"
+
+[project.urls]
+Homepage = "https://github.com/Fwmouomu/maestro-plus"
+Issues = "https://github.com/Fwmouomu/maestro-plus/issues"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/maestro_plus"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -1,0 +1,10 @@
+# Normalise line endings in the repository. Without this, a checkout on Linux
+# rewrites every file and CI diffs show changes where nothing changed.
+* text=auto eol=lf
+
+# Screenshots are evidence. Treating them as text would corrupt every captured
+# frame the moment anyone checks this out on a different platform.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.mp4 binary

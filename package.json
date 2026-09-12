@@ -1,0 +1,34 @@
+{
+  "name": "maestro-plus",
+  "version": "0.1.0",
+  "description": "Launcher for the maestro-plus MCP server: multi-device Maestro orchestration, assertions, and failure diagnosis for AI agents.",
+  "type": "module",
+  "bin": {
+    "maestro-plus": "index.mjs"
+  },
+  "files": [
+    "index.mjs",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "maestro",
+    "mobile-testing",
+    "ui-testing",
+    "android",
+    "adb",
+    "ai-agent"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Fwmouomu/maestro-plus.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Fwmouomu/maestro-plus/issues"
+  }
+}
