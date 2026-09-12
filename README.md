@@ -9,6 +9,7 @@ Built on top of Maestro's official MCP server — an orchestration layer above i
 never a replacement. When upstream grows, this project grows with it instead of dying.
 
 [![CI](https://github.com/Fwmouomu/maestro-plus/actions/workflows/ci.yml/badge.svg)](https://github.com/Fwmouomu/maestro-plus/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/Fwmouomu/maestro-plus)](https://github.com/Fwmouomu/maestro-plus/releases)
 [![Python](https://img.shields.io/badge/python-3.10%2B-3776AB?logo=python&logoColor=white)](https://www.python.org)
 [![License: MIT](https://img.shields.io/badge/license-MIT-3B6D11)](LICENSE)
 [![MCP](https://img.shields.io/badge/MCP-compatible-534AB7)](https://modelcontextprotocol.io)
