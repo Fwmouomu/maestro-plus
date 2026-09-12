@@ -35,4 +35,17 @@ jobs:
         run: ruff check .
 
       - name: Test
-        run: pytest -q
+        run: |
+          set +e
+          pytest -q --tb=short 2>&1 | tee pytest-output.txt
+          code=$?
+          if [ "$code" -ne 0 ]; then
+            {
+              echo "### Pytest failure output"
+              echo '```'
+              tail -c 8000 pytest-output.txt
+              echo '```'
+            } >> "$GITHUB_STEP_SUMMARY"
+          fi
+          rm -f pytest-output.txt
+          exit "$code"

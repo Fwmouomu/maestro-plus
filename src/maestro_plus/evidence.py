@@ -292,15 +292,17 @@ def find_elements(
 ) -> list[ElementInfo]:
     """Find elements matching every supplied criterion.
 
-    Substring matching is the default because Maestro flows are written against
-    visible labels, and asserting on an exact string is how locators break when a
-    designer adds a period.
+    ``contains`` (the default) matches case-insensitively on substrings, because
+    Maestro flows are written against visible labels. Exact mode is the strict
+    counterpart: the full string, case-sensitive. The two differ in both width
+    and case handling, which is what makes exact mode useful for asserting that
+    a label is precisely right.
     """
 
     def matches(value: str, wanted: str) -> bool:
         if contains:
             return wanted.lower() in value.lower()
-        return value.lower() == wanted.lower()
+        return value == wanted
 
     results: list[ElementInfo] = []
     for element in iter_elements(root):
