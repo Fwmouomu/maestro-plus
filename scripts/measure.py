@@ -13,7 +13,8 @@ figure, the script prints the labelling template that produces one honestly.
 
 Usage:
     python scripts/measure.py --flows flows/ --devices emulator-5554,emulator-5556
-    python scripts/measure.py --flows flows/ --devices emulator-5554 --artifacts ~/.maestro-plus/artifacts
+    python scripts/measure.py --flows flows/ --devices emulator-5554 \
+        --artifacts ~/.maestro-plus/artifacts
 
 The `sys.path` insertion below is deliberate: this is a measurement tool, not a
 library, and it should run from a checkout without `pip install` first.

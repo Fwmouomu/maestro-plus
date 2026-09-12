@@ -22,9 +22,9 @@ import re
 import shutil
 import subprocess
 import time
+from collections.abc import Iterable, Sequence
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Callable, Iterable, Sequence
 from xml.etree import ElementTree
 
 from ..errors import FlowError, MaestroPlusError, ToolchainError
@@ -36,7 +36,9 @@ DEFAULT_TAIL_LINES = 40
 MAESTRO_OUTPUT_ROOT = Path.home() / ".maestro" / "tests"
 
 _VERSION_RE = re.compile(r"\d+\.\d+\.\d+")
-_FAIL_LINE_RE = re.compile(r"(^\s*\[Failed\]|^\s*FAILED\b|^\s*FAIL\b)", re.IGNORECASE | re.MULTILINE)
+_FAIL_LINE_RE = re.compile(
+    r"(^\s*\[Failed\]|^\s*FAILED\b|^\s*FAIL\b)", re.IGNORECASE | re.MULTILINE
+)
 
 
 def _maestro_binary() -> str:
@@ -86,6 +88,13 @@ def _tail(text: str, lines: int = DEFAULT_TAIL_LINES) -> str:
     return "\n".join(["... (truncated)", *parts[-lines:]])
 
 
+def _decoded(stream: bytes | str | None) -> str:
+    """What TimeoutExpired carries depends on the Python version: bytes or str."""
+    if isinstance(stream, bytes):
+        return stream.decode("utf-8", "replace")
+    return stream or ""
+
+
 def parse_junit(path: Path) -> list[str]:
     """Return the names of failed test cases in a JUnit report.
 
@@ -118,6 +127,31 @@ def parse_failed_steps(stdout: str) -> list[str]:
             if cleaned and cleaned not in steps:
                 steps.append(cleaned)
     return steps
+
+
+def find_latest_junit(since: float, root: Path | None = None) -> Path | None:
+    """Find the JUnit report Maestro wrote during the run that just finished.
+
+    Maestro stores reports under ``~/.maestro/tests/<timestamp>/`` without being
+    asked, which makes reading the newest one strictly safer than requesting one
+    on the command line. ``since`` is a wall-clock cutoff so a report left over
+    from a previous run cannot be mistaken for this one's.
+    """
+    search_root = root or MAESTRO_OUTPUT_ROOT
+    if not search_root.is_dir():
+        return None
+
+    candidates: list[Path] = []
+    for path in search_root.rglob("*.xml"):
+        try:
+            if path.stat().st_mtime >= since:
+                candidates.append(path)
+        except OSError:
+            continue
+
+    if not candidates:
+        return None
+    return max(candidates, key=lambda candidate: candidate.stat().st_mtime)
 
 
 @dataclass
@@ -216,8 +250,8 @@ def run_flow(
     except subprocess.TimeoutExpired as exc:
         timed_out = True
         exit_code = -1
-        stdout = exc.stdout.decode("utf-8", "replace") if isinstance(exc.stdout, bytes) else (exc.stdout or "")
-        stderr = exc.stderr.decode("utf-8", "replace") if isinstance(exc.stderr, bytes) else (exc.stderr or "")
+        stdout = _decoded(exc.stdout)
+        stderr = _decoded(exc.stderr)
         stderr += f"\n[maestro-plus] flow exceeded the {timeout}s timeout and was killed."
     except OSError as exc:
         raise MaestroPlusError(f"Could not launch the Maestro CLI: {exc}") from exc
@@ -254,7 +288,7 @@ def run_many(
     env: dict[str, str] | None = None,
     timeout: int = DEFAULT_FLOW_TIMEOUT,
     artifacts_dir: Path | None = None,
-    on_result: "callable | None" = None,
+    on_result: callable | None = None,
 ) -> list[FlowResult]:
     """Run several flows in sequence on one device.
 

@@ -210,7 +210,9 @@ def explore_and_record(
     name: Annotated[str, Field(description="Flow name, used as the file name.")] = "recorded-flow",
     output_dir: Annotated[
         str | None,
-        Field(description="Directory for the .yaml file. Defaults to the server working directory."),
+        Field(
+            description="Directory for the .yaml file. Defaults to the server working directory."
+        ),
     ] = None,
     device: Annotated[
         str | None, Field(description="Device serial. Omit to take any single free device.")

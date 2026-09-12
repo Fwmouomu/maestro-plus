@@ -31,7 +31,9 @@ def run_parallel(
         list[str],
         Field(
             min_length=1,
-            description="Maestro flow files to run. Paths resolve against the server working directory.",
+            description=(
+                "Maestro flow files to run. Paths resolve against the server working directory."
+            ),
         ),
     ],
     devices: Annotated[
@@ -70,10 +72,7 @@ def run_parallel(
             "against the client's directory."
         )
 
-    if devices:
-        device_count = min(len(devices), len(flow_paths))
-    else:
-        device_count = len(flow_paths)
+    device_count = min(len(devices), len(flow_paths)) if devices else len(flow_paths)
 
     started = time.monotonic()
     results: list[maestro_cli.FlowResult] = []

@@ -48,7 +48,7 @@ def list_device_pool() -> dict:
 
 
 def health_check() -> dict:
-    """Verify the local toolchain and report which tools work, which are impaired, and what to install.
+    """Verify the toolchain: which tools work, which are impaired, what to install.
 
     Run this first when anything behaves unexpectedly. It distinguishes "the
     Maestro CLI is missing" from "the CLI is fine but the emulator is

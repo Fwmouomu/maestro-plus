@@ -38,9 +38,25 @@ def hierarchy() -> ElementTree.Element:
 # --------------------------------------------------------------------------- #
 
 
-def _parse_yaml(text: str) -> object:
+def _parse_documents(text: str) -> list[object]:
+    """Parse a Maestro flow, which is a multi-document YAML file.
+
+    ``yaml.safe_load`` is the wrong tool here: a flow is two documents separated
+    by `---` — a header carrying appId and a body carrying the step list — and
+    loading it as one document fails with a ComposerError.
+    """
     yaml = pytest.importorskip("yaml", reason="pyyaml is a test-only dependency")
-    return yaml.safe_load(text)
+    return list(yaml.safe_load_all(text))
+
+
+def _flow_parts(text: str) -> tuple[dict, list]:
+    """Split a generated flow into its header and its step list."""
+    documents = _parse_documents(text)
+    assert len(documents) == 2, f"a flow is exactly two documents, got {len(documents)}"
+    header, body = documents
+    assert isinstance(header, dict)
+    assert isinstance(body, list)
+    return header, body
 
 
 def test_build_flow_produces_parseable_yaml() -> None:
@@ -49,15 +65,17 @@ def test_build_flow_produces_parseable_yaml() -> None:
         [
             record.RecordedStep(action="launch"),
             record.RecordedStep(action="tap", text="Sign in"),
-            record.RecordedStep(action="input", resource_id="com.example.app:id/email", value="a@b.c"),
+            record.RecordedStep(
+                action="input", resource_id="com.example.app:id/email", value="a@b.c"
+            ),
             record.RecordedStep(action="assert_visible", text="Welcome"),
         ],
     )
 
-    parsed = _parse_yaml(flow)
-    assert parsed["appId"] == "com.example.app"
-    assert isinstance(parsed[None], list)
-    assert parsed[None][0] == "launchApp"
+    header, body = _flow_parts(flow)
+    assert header["appId"] == "com.example.app"
+    assert body[0] == "launchApp"
+    assert {"tapOn": "Sign in"} in body
 
 
 def test_input_step_taps_the_target_before_typing() -> None:

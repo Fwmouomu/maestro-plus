@@ -97,7 +97,9 @@ def _attribute(
     if focus:
         lowered = focus.lower()
         if any(dialog in lowered for dialog in _SYSTEM_DIALOGS):
-            findings.append(f"A system dialog holds focus ({focus}), and the flow never dismissed it.")
+            findings.append(
+                f"A system dialog holds focus ({focus}), and the flow never dismissed it."
+            )
             recommendations.append(
                 "This is a test defect. Either add a step that dismisses the dialog or grant "
                 "the permission ahead of the run with `adb shell pm grant`."
@@ -243,7 +245,9 @@ def debug_failure(
             return {
                 "diagnosed": False,
                 "flow": result.to_dict(),
-                "verdict": f"Flow '{result.flow}' passed on {serial}; there is nothing to diagnose.",
+                "verdict": (
+                    f"Flow '{result.flow}' passed on {serial}; there is nothing to diagnose."
+                ),
                 "artifacts_dir": str(run_dir),
             }
 
@@ -293,7 +297,9 @@ def debug_failure(
             recommendations=recommendations,
             evidence={
                 "screen_before_run": str(before) if before else "not captured",
-                "screen_at_failure": str(maestro_shots[0]) if maestro_shots else "Maestro captured none",
+                "screen_at_failure": (
+                    str(maestro_shots[0]) if maestro_shots else "Maestro captured none"
+                ),
                 "screen_after_failure": str(after) if after else "not captured",
                 "screens_kept": len(kept),
                 "screens_dropped_as_duplicates": len(candidates) - len(kept),

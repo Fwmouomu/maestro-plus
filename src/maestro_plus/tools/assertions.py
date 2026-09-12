@@ -103,7 +103,9 @@ def _evaluate(root, assertion: ElementAssertion) -> tuple[bool, str]:
 def _verdict(flow_name: str, result: maestro_cli.FlowResult, outcomes: list[dict]) -> str:
     """One sentence an agent can quote without reading anything else."""
     if not result.success:
-        detail = f" Failing step(s): {', '.join(result.failed_steps)}." if result.failed_steps else ""
+        detail = (
+            f" Failing step(s): {', '.join(result.failed_steps)}." if result.failed_steps else ""
+        )
         return f"Flow '{flow_name}' failed, so assertions were not evaluated.{detail}"
     if not outcomes:
         return f"Flow '{flow_name}' passed. No assertions were requested."
