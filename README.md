@@ -1,14 +1,28 @@
+<div align="center">
+
 # maestro-plus
 
-**Multi-device pools, composite assertions, and automatic failure diagnosis for AI agents driving mobile UI tests — built on top of Maestro's official MCP server.**
+**Multi-device pools, composite assertions, and automatic failure diagnosis
+for AI agents driving mobile UI tests.**
+
+Built on top of Maestro's official MCP server — an orchestration layer above it,
+never a replacement. When upstream grows, this project grows with it instead of dying.
+
+[![CI](https://github.com/Fwmouomu/maestro-plus/actions/workflows/ci.yml/badge.svg)](https://github.com/Fwmouomu/maestro-plus/actions/workflows/ci.yml)
+[![Python](https://img.shields.io/badge/python-3.10%2B-3776AB?logo=python&logoColor=white)](https://www.python.org)
+[![License: MIT](https://img.shields.io/badge/license-MIT-3B6D11)](LICENSE)
+[![MCP](https://img.shields.io/badge/MCP-compatible-534AB7)](https://modelcontextprotocol.io)
+[![Code style: ruff](https://img.shields.io/badge/code%20style-ruff-854F0B)](https://docs.astral.sh/ruff/)
+
+[Install](#install) · [Tools](#tools) · [Why it exists](docs/why.md) · [Known limitations](docs/limitations.md) · [中文说明](README.zh-CN.md)
+
+</div>
+
+---
 
 Maestro's MCP server gives an agent eyes and hands: it can read the screen, tap, and run a flow. It deliberately stops there — one device, atomic operations, and no opinion about whether the result was correct.
 
-`maestro-plus` fills in what the official server leaves out. It does not replace it. Every tool here is an orchestration layer sitting above the official tools, so when the upstream project grows, this project grows with it instead of dying.
-
-[中文说明](README.zh-CN.md)
-
----
+`maestro-plus` fills in what the official server leaves out.
 
 ## Capability matrix
 

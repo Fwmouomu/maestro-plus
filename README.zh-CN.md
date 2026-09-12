@@ -1,6 +1,21 @@
 # maestro-plus
 
-**为 AI Agent 驱动的移动端 UI 测试，补上多设备池、断言、以及失败自动诊断 —— 建立在 Maestro 官方 MCP server 之上。**
+<div align="center">
+
+**为 AI Agent 驱动的移动端 UI 测试，补上多设备池、断言、以及失败自动诊断**
+
+建立在 Maestro 官方 MCP server 之上 —— 只做增强层，绝不替换。上游长大，本项目跟着变强。
+
+[![CI](https://github.com/Fwmouomu/maestro-plus/actions/workflows/ci.yml/badge.svg)](https://github.com/Fwmouomu/maestro-plus/actions/workflows/ci.yml)
+[![Python](https://img.shields.io/badge/python-3.10%2B-3776AB?logo=python&logoColor=white)](https://www.python.org)
+[![License: MIT](https://img.shields.io/badge/license-MIT-3B6D11)](LICENSE)
+[![MCP](https://img.shields.io/badge/MCP-compatible-534AB7)](https://modelcontextprotocol.io)
+
+[安装](#安装) · [工具](#工具) · [已知限制](#已知限制) · [English](README.md)
+
+</div>
+
+---
 
 Maestro 的 MCP server 给了 Agent 眼睛和手：能读屏、能点击、能跑 flow。它刻意停在这里 —— 单设备、原子操作、对结果不置可否。
 
