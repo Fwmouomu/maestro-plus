@@ -2,6 +2,8 @@
 
 # maestro-plus
 
+<img src="docs/social-preview.png" alt="maestro-plus — multi-device pools, assertions, failure diagnosis" width="720">
+
 **Multi-device pools, composite assertions, and automatic failure diagnosis
 for AI agents driving mobile UI tests.**
 
