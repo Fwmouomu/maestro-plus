@@ -2,6 +2,8 @@
 
 <div align="center">
 
+<img src="docs/social-preview.png" alt="maestro-plus — 多设备池、断言、失败自动归因" width="720">
+
 **为 AI Agent 驱动的移动端 UI 测试，补上多设备池、断言、以及失败自动诊断**
 
 建立在 Maestro 官方 MCP server 之上 —— 只做增强层，绝不替换。上游长大，本项目跟着变强。
